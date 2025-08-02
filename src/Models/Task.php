@@ -1,6 +1,6 @@
 <?php
 
-namespace Solomon\TaskManagerApiPhp\models;
+namespace Solomon\TaskManagerApiPhp\Models;
 
 use PDO;
 

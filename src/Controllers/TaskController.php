@@ -1,6 +1,6 @@
 <?php
 
-namespace Solomon\TaskManagerApiPhp\controllers;
+namespace Solomon\TaskManagerApiPhp\Controllers;
 
 use Solomon\TaskManagerApiPhp\models\Task;
 

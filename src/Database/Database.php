@@ -1,4 +1,9 @@
 <?php
+
+namespace Solomon\TaskManagerApiPhp\Database;
+
+use PDO;
+
 class Database
 {
     private static $instance = null;
