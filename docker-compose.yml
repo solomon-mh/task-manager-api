@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  task-manager-api:
+    build: .
+    container_name: task-manager-api
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html # Sync project files
+      - sqlite_data:/var/www/html/tasks.db # Persist SQLite database file
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
