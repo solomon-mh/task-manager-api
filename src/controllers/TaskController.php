@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../models/Task.php';
+
+namespace Solomon\TaskManagerApiPhp\controllers;
+
+use Solomon\TaskManagerApiPhp\models\Task;
 
 class TaskController
 {
