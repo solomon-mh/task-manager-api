@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_sqlite \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
 COPY . /var/www/html/
