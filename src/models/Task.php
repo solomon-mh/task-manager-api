@@ -1,4 +1,9 @@
 <?php
+
+namespace Solomon\TaskManagerApiPhp\models;
+
+use PDO;
+
 class Task
 {
     private $db;
