@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
-COPY . /var/www/html/
+COPY public/ /var/www/html/
 WORKDIR /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 
