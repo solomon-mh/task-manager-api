@@ -11,4 +11,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # Redirect all requests to index.php
 
-RewriteRule ^ index.php [QSA,L]
+RewriteRule ^ public/index.php [QSA,L]
