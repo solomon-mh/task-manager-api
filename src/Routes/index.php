@@ -1,7 +1,7 @@
 <?php
 
-use Solomon\TaskManagerApiPhp\Controllers\TaskController;
 use Solomon\TaskManagerApiPhp\Database\Database;
+use Solomon\TaskManagerApiPhp\Controllers\TaskController;
 
 header('Content-Type: application/json');
 
