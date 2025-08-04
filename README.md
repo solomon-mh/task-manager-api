@@ -181,22 +181,35 @@ Each task has the following fields:
 
 ---
 
+---
+
+## JWT Authentication
+
+This API includes JWT-based authentication by:
+
+1. Adding a `users` table with `username` and `password_hash`.
+2. Implementing login and registration endpoints.
+3. Generating and verifying JWT tokens for protected routes.
+
+---
+
 ## Project Structure
 
 ```
 task-manager-api/
 ├── src/
-│   ├── controllers/      # Handles request logic
-│   ├── database/         # Database connection and initialization
-│   ├── models/           # Database models
-│   └── routes/           # API routes
-├── docker/
-│   └── apache.conf       # Apache virtual host configuration
-├── Dockerfile            # Docker build file
-├── docker-compose.yml
-├── index.php             # API entry point
-├── .htaccess             # Apache rewrite rules
-└── README.md
+│   ├── Controllers/        # Handles request logic
+│   ├── Database/           # Database connection and initialization
+│   ├── Models/             # Database models (Task, User)
+│   └── Routes/             # API route definitions
+├── config/
+│   └── apache.conf         # Apache virtual host configuration
+├── Dockerfile              # Docker build file
+├── docker-compose.yml      # Docker compose for services
+├── index.php               # API entry point (front controller)
+├── .env                    # Environment variables (JWT_SECRET)
+├── .htaccess               # Apache rewrite rules for clean URLs
+└── README.md               # Documentation
 ```
 
 ---

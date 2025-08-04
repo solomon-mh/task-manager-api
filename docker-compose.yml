@@ -5,6 +5,8 @@ services:
     container_name: task-manager-api
     ports:
       - "8080:80"
+    env_file:
+      - .env
     volumes:
       - .:/var/www/html # Sync project files
       - sqlite_data:/var/www/html/tasks.db # Persist SQLite database file

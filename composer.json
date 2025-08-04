@@ -14,5 +14,8 @@
             "email": "solomon.muhye.wd@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "firebase/php-jwt": "^6.11",
+        "vlucas/phpdotenv": "^5.6"
+    }
 }
