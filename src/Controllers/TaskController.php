@@ -2,7 +2,7 @@
 
 namespace Solomon\TaskManagerApiPhp\Controllers;
 
-use Solomon\TaskManagerApiPhp\models\Task;
+use Solomon\TaskManagerApiPhp\Models\Task;
 
 class TaskController
 {
