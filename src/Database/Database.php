@@ -3,6 +3,7 @@
 namespace Solomon\TaskManagerApiPhp\Database;
 
 use PDO;
+use PDOException;
 
 class Database
 {
@@ -11,9 +12,15 @@ class Database
 
     private function __construct()
     {
-        $this->pdo = new PDO('sqlite:' . __DIR__ . '/tasks.db');
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->initializeTable();
+        $dbPath = '/var/www/data/tasks.db';
+
+        try {
+            $this->pdo = new PDO('sqlite:' . $dbPath);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->initializeTable();
+        } catch (PDOException $e) {
+            die("Database connection failed: " . $e->getMessage());
+        }
     }
 
     public static function getInstance()
@@ -36,7 +43,7 @@ class Database
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 title TEXT NOT NULL,
                 description TEXT,
-                status TEXT CHECK(status IN ('pending', 'in-progress', 'completed')) DEFAULT 'pending',
+                status TEXT CHECK(status IN ('pending','in-progress','completed')) DEFAULT 'pending',
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP,
                 updated_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
