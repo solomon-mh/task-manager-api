@@ -3,20 +3,51 @@
 namespace Solomon\TaskManagerApiPhp\Controllers;
 
 use Solomon\TaskManagerApiPhp\Models\Task;
+use Solomon\TaskManagerApiPhp\Controllers\AuthController; // Import AuthController
 
 class TaskController
 {
     private $task;
+    private $auth;
 
     public function __construct($db)
     {
         $this->task = new Task($db);
+        $this->auth = new AuthController($db); // Initialize AuthController
+    }
+
+    /**
+     * Check JWT token from Authorization header
+     */
+    private function authorize()
+    {
+        $headers = getallheaders();
+
+        if (!isset($headers['Authorization'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Authorization header missing']);
+            exit;
+        }
+
+        $token = str_replace('Bearer ', '', $headers['Authorization']);
+        $decoded = $this->auth->verifyToken($token);
+
+        if (!$decoded) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Invalid or expired token']);
+            exit;
+        }
+
+        return $decoded; // You can use decoded user data if needed
     }
 
     public function handleRequest($method, $id = null)
     {
         switch ($method) {
             case 'POST':
+                // Require authentication for creating tasks
+                $this->authorize();
+
                 $data = json_decode(file_get_contents("php://input"), true);
                 if (!isset($data['title']) || !isset($data['description'])) {
                     http_response_code(400);
@@ -28,6 +59,7 @@ class TaskController
                 break;
 
             case 'GET':
+                // GET can be public, no auth required
                 if ($id) {
                     $task = $this->task->getById($id);
                     if ($task) {
@@ -43,6 +75,9 @@ class TaskController
                 break;
 
             case 'PUT':
+                // Require authentication for updating tasks
+                $this->authorize();
+
                 if (!$id) {
                     http_response_code(400);
                     echo json_encode(['error' => 'Task ID required']);
