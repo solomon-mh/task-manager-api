@@ -59,12 +59,50 @@ cd task-manager-api
 
 ## API Endpoints
 
-### 1. Create Task (POST)
+# Task Manager API - Endpoints
+
+## 1. Register User (POST)
 
 **Request**
 
 ```bash
-curl -X POST http://localhost:8000/tasks -H "Content-Type: application/json" -d '{"title": "Test Task", "description": "This is a sample task"}'
+curl -X POST http://localhost:8000/auth/register   -H "Content-Type: application/json"   -d '{"username": "testuser", "password": "testpassword"}'
+```
+
+**Response**
+
+```json
+{
+  "message": "User registered"
+}
+```
+
+---
+
+## 2. Login User (POST)
+
+**Request**
+
+```bash
+curl -X POST http://localhost:8000/auth/login   -H "Content-Type: application/json"   -d '{"username": "testuser", "password": "testpassword"}'
+```
+
+**Response**
+
+```json
+{
+  "token": "your_jwt_token_here"
+}
+```
+
+---
+
+## 3. Create Task (POST)
+
+**Request**
+
+```bash
+curl -X POST http://localhost:8000/tasks   -H "Content-Type: application/json"   -H "Authorization: Bearer your_jwt_token_here"   -d '{"title": "Test Task", "description": "This is a sample task"}'
 ```
 
 **Response**
@@ -78,18 +116,18 @@ curl -X POST http://localhost:8000/tasks -H "Content-Type: application/json" -d 
 
 ---
 
-### 2. Get All Tasks (GET)
+## 4. Get All Tasks (GET)
 
 **Request**
 
 ```bash
-curl http://localhost:8000/tasks
+curl http://localhost:8000/tasks   -H "Authorization: Bearer your_jwt_token_here"
 ```
 
 **With filtering**
 
 ```bash
-curl http://localhost:8000/tasks?status=completed
+curl http://localhost:8000/tasks?status=completed   -H "Authorization: Bearer your_jwt_token_here"
 ```
 
 **Response**
@@ -109,12 +147,12 @@ curl http://localhost:8000/tasks?status=completed
 
 ---
 
-### 3. Get Task by ID (GET)
+## 5. Get Task by ID (GET)
 
 **Request**
 
 ```bash
-curl http://localhost:8000/tasks/1
+curl http://localhost:8000/tasks/1   -H "Authorization: Bearer your_jwt_token_here"
 ```
 
 **Response**
@@ -132,12 +170,12 @@ curl http://localhost:8000/tasks/1
 
 ---
 
-### 4. Update Task (PUT)
+## 6. Update Task (PUT)
 
 **Request**
 
 ```bash
-curl -X PUT http://localhost:8000/tasks/1 -H "Content-Type: application/json" -d '{"title": "Updated Task", "description": "Updated description", "status": "completed"}'
+curl -X PUT http://localhost:8000/tasks/1   -H "Content-Type: application/json"   -H "Authorization: Bearer your_jwt_token_here"   -d '{"title": "Updated Task", "description": "Updated description", "status": "completed"}'
 ```
 
 **Response**
@@ -151,6 +189,43 @@ curl -X PUT http://localhost:8000/tasks/1 -H "Content-Type: application/json" -d
 ---
 
 ## Error Responses
+
+Examples:
+
+```json
+{
+  "error": "Task not found"
+}
+```
+
+```json
+{
+  "error": "Authorization header missing"
+}
+```
+
+```json
+{
+  "error": "Invalid or expired token"
+}
+```
+
+```json
+{
+  "error": "Username already exists"
+}
+```
+
+---
+
+## Authorization Rules
+
+- **/auth/register** and **/auth/login** are public endpoints (no token required).
+- **All /tasks endpoints require an Authorization header** with a valid JWT token:
+
+```bash
+-H "Authorization: Bearer your_jwt_token_here"
+```
 
 Examples:
 
